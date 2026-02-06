@@ -4,14 +4,14 @@ import pandas as pd
 # 페이지 설정
 st.set_page_config(page_title="칼바람 나락 1+2코어 빅데이터", layout="wide")
 
-st.title("📊 칼바람 나락 코어템 시너지 대시보드(260205ver)")
+st.title("📊 칼바람 나락 코어템 시너지 대시보드(260206ver)")
 st.sidebar.header("필터 설정")
 
 # 데이터 로드
 @st.cache_data
 def load_data():
     try:
-        df = pd.read_csv('aram_top3_260205.csv')
+        df = pd.read_csv('aram_top3_260206.csv')
         # 승률 문자열을 숫자로 변환 (정렬용)
         df['승률_float'] = df['전체승률'].str.replace('%', '').astype(float)
         return df
@@ -79,3 +79,4 @@ if df is not None:
         st.success(f"🔥 **{target_champ}** 인기 조합 (판수)")
         for i in range(1, 4):
             st.write(f"{i}위: {champ_data[f'판수{i}위_조합']} ({champ_data[f'판수{i}위_판수']}판)")
+
