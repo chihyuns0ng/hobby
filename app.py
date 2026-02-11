@@ -63,7 +63,7 @@ if df is not None:
 
     # 시각화 섹션
     st.divider()
-    c1, c2, c3 = st.columns(3)
+    c1, c2 = st.columns(2)
 
     import altair as alt
 
@@ -80,13 +80,15 @@ if df is not None:
 
     with c2:
         st.subheader("🔥 픽률 Top 10")
-        top_10_pick = df.nlargest(10, '픽률').sort_values('픽률', ascending=True)
-        st.bar_chart(data=top_10_pick, x='챔피언', y='픽률', color="#29b5e8")
+        top_10_pick = df.nlargest(10, '픽률').sort_values('픽률', ascending=False)
+        
+        chart2 = alt.Chart(top_10_pick).mark_bar(color="#29b5e8").encode(
+            x=alt.X('챔피언:N', sort=None, title='챔피언'),
+            y=alt.Y('픽률:Q', title='픽률 (%)'),
+            tooltip=['챔피언', '픽률']
+        ).properties(height=400)
+        st.altair_chart(chart2, use_container_width=True)
 
-    with c3:
-        st.subheader("📊 집계 순위 (판수)")
-        top_10_games = df.nlargest(10, '분석판수').sort_values('분석판수', ascending=True)
-        st.bar_chart(data=top_10_games, x='챔피언', y='분석판수', color="#0072B2")
 
     # 상세 조합 조회기
     st.divider()
@@ -107,6 +109,7 @@ if df is not None:
         st.success(f"🔥 **{target_champ}** 인기 조합 (판수)")
         for i in range(1, 4):
             st.write(f"{i}위: {champ_data[f'판수{i}위_조합']} ({champ_data[f'판수{i}위_판수']}판)")
+
 
 
 
