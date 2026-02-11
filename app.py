@@ -32,7 +32,7 @@ df = load_data()
 if df is not None:
     # 검색 필터
     search_query = st.sidebar.text_input("챔피언 이름 검색", "")
-    min_games = st.sidebar.slider("최소 픽 수", 0, int(df['픽 횟수'].max()), 5)
+    min_games = st.sidebar.slider("최소 픽 횟수", 0, int(df['픽 횟수'].max()), 5)
     
     filtered_df = df[(df['챔피언'].str.contains(search_query)) & (df['픽 횟수'] >= min_games)]
 
@@ -115,6 +115,7 @@ if df is not None:
         st.success(f"🔥 **{target_champ}** 인기 조합 (판수)")
         for i in range(1, 4):
             st.write(f"{i}위: {champ_data[f'판수{i}위_조합']} ({champ_data[f'판수{i}위_판수']}판)")
+
 
 
 
