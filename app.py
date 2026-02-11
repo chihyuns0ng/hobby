@@ -87,7 +87,7 @@ if df is not None:
             y=alt.Y('픽률:Q', title='픽률 (%)'),
             tooltip=[
                 alt.Tooltip('챔피언:N'),
-                alt.Tooltip('픽률:Q', title='픽률', format='.1f%')
+                alt.Tooltip('픽률:Q', title='픽률', format='.1f')
             ]
         ).properties(height=400)
         st.altair_chart(chart2, use_container_width=True)
@@ -112,6 +112,7 @@ if df is not None:
         st.success(f"🔥 **{target_champ}** 인기 조합 (판수)")
         for i in range(1, 4):
             st.write(f"{i}위: {champ_data[f'판수{i}위_조합']} ({champ_data[f'판수{i}위_판수']}판)")
+
 
 
 
