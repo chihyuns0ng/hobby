@@ -99,6 +99,7 @@ if df is not None:
     # 상세 조합 조회기
     st.divider()
     st.subheader("🔍 특정 챔피언 상세 조합 분석")
+    champ_list = sorted(df['챔피언'].unique().tolist())
     target_champ = st.selectbox("챔피언을 선택하세요", df['챔피언'].unique())
     
     champ_data = df[df['챔피언'] == target_champ].iloc[0]
@@ -115,6 +116,7 @@ if df is not None:
         st.success(f"🔥 **{target_champ}** 인기 조합 (판수)")
         for i in range(1, 4):
             st.write(f"{i}위: {champ_data[f'판수{i}위_조합']} ({champ_data[f'판수{i}위_판수']}판)")
+
 
 
 
