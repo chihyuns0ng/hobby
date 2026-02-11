@@ -17,6 +17,8 @@ def load_data():
         # 픽률 (ipynb 코드에서 가져온 매치 수 값 이용)
         total_matches = 134925 
         df['픽률'] = (df['분석판수'] / total_matches) * 100 * 10
+
+        df['픽률_per'] = df['픽률'].map(lambda x: f"{x:.1f}%")
         
         return df
     except FileNotFoundError:
@@ -44,11 +46,15 @@ if df is not None:
 
     # 데이터 테이블 출력
     st.subheader("🏆 전체 통계 및 조합 데이터")
-    
-    # 보고 싶은 컬럼 선택 기능
+    display_columns = [
+        '챔피언', '전체승률', '픽률', '분석판수', 
+        '승률1위_조합', '승률1위_WR', '승률1위_판수',
+        '판수1위_조합', '판수1위_WR', '판수1위_판수'
+    ]
+    # 컬럼 선택 기능
     selected_cols = st.multiselect(
         "표시할 컬럼 선택", 
-        df.columns.tolist(), 
+        display_columns, 
         default=['챔피언', '전체승률', '픽률', '분석판수', '승률1위_조합', '판수1위_조합']
     )
     
@@ -85,10 +91,7 @@ if df is not None:
         chart2 = alt.Chart(top_10_pick).mark_bar(color="#29b5e8").encode(
             x=alt.X('챔피언:N', sort=None, title='챔피언'),
             y=alt.Y('픽률:Q', title='픽률 (%)'),
-            tooltip=[
-                alt.Tooltip('챔피언:N'),
-                alt.Tooltip('픽률:Q', title='픽률', format='.1f')
-            ]
+            tooltip=['챔피언', '픽률_per']
         ).properties(height=400)
         st.altair_chart(chart2, use_container_width=True)
 
@@ -112,6 +115,7 @@ if df is not None:
         st.success(f"🔥 **{target_champ}** 인기 조합 (판수)")
         for i in range(1, 4):
             st.write(f"{i}위: {champ_data[f'판수{i}위_조합']} ({champ_data[f'판수{i}위_판수']}판)")
+
 
 
 
