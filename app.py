@@ -12,11 +12,13 @@ st.sidebar.header("필터 설정")
 def load_data():
     try:
         df = pd.read_csv('aram_top3_260206.csv')
+        df = df.rename(columns={'분석판수': '픽 횟수'})
+        
         # 승률 str->float
         df['승률_float'] = df['전체승률'].str.replace('%', '').astype(float)
         # 픽률 (ipynb 코드에서 가져온 매치 수 값 이용)
         total_matches = 134925 
-        df['픽률'] = (df['분석판수'] / total_matches) * 100 * 10
+        df['픽률'] = (df['픽 횟수'] / total_matches) * 100 * 10
 
         df['픽률_per'] = df['픽률'].map(lambda x: f"{x:.1f}%")
         
@@ -30,7 +32,7 @@ df = load_data()
 if df is not None:
     # 검색 필터
     search_query = st.sidebar.text_input("챔피언 이름 검색", "")
-    min_games = st.sidebar.slider("최소 픽 수", 0, int(df['분석판수'].max()), 5)
+    min_games = st.sidebar.slider("최소 픽 수", 0, int(df['픽 횟수'].max()), 5)
     
     filtered_df = df[(df['챔피언'].str.contains(search_query)) & (df['분석판수'] >= min_games)]
 
@@ -38,7 +40,7 @@ if df is not None:
     col1, col2, col3, col4 = st.columns(4)
     col1.metric("총 분석 챔피언 수", len(df))
     col2.metric("최고 승률", df.iloc[0]['챔피언'], df.iloc[0]['전체승률'])
-    col3.metric("최다 선택", df.loc[df['분석판수'].idxmax(), '챔피언'], f"{df['분석판수'].max()} games")
+    col3.metric("최다 선택", df.loc[df['픽 횟수'].idxmax(), '챔피언'], f"{df['픽 횟수'].max()} games")
     top_pick = df.loc[df['픽률'].idxmax()]
     col4.metric("최고 픽률", top_pick['챔피언'], f"{top_pick['픽률']:.1f}%")
 
@@ -53,7 +55,7 @@ if df is not None:
     selected_cols = st.multiselect(
         "표시할 컬럼 선택", 
         available_cols, 
-        default=['챔피언', '전체승률', '픽률', '분석판수', '승률1위_조합', '판수1위_조합']
+        default=['챔피언', '전체승률', '픽률', '픽 횟수', '승률1위_조합', '판수1위_조합']
     )
     
     st.dataframe(
@@ -113,6 +115,7 @@ if df is not None:
         st.success(f"🔥 **{target_champ}** 인기 조합 (판수)")
         for i in range(1, 4):
             st.write(f"{i}위: {champ_data[f'판수{i}위_조합']} ({champ_data[f'판수{i}위_판수']}판)")
+
 
 
 
