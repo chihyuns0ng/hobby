@@ -69,7 +69,7 @@ if df is not None:
 
     with c1:
         st.subheader("📈 승률 Top 10")
-        top_10_wr = df.nlargest(10, '승률_float').sort_values('승률_float', ascending=True)
+        top_10_wr = df.nlargest(10, '승률_float').sort_values('승률_float', ascending=False)
         
         chart1 = alt.Chart(top_10_wr).mark_bar(color="#ff4b4b").encode(
             x=alt.X('챔피언:N', sort=None, title='챔피언'),
@@ -107,6 +107,7 @@ if df is not None:
         st.success(f"🔥 **{target_champ}** 인기 조합 (판수)")
         for i in range(1, 4):
             st.write(f"{i}위: {champ_data[f'판수{i}위_조합']} ({champ_data[f'판수{i}위_판수']}판)")
+
 
 
 
