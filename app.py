@@ -68,7 +68,7 @@ if df is not None:
     with c1:
         st.subheader("📈 승률 Top 10")
         top_10_wr = df.nlargest(10, '승률_float').sort_values('승률_float', ascending=True)
-        st.bar_chart(data=top_10_wr, x='챔피언', y='승률', color="#ff4b4b")
+        st.bar_chart(data=top_10_wr, x='챔피언', y='승률_float', color="#ff4b4b")
 
     with c2:
         st.subheader("🔥 픽률 Top 10")
@@ -99,6 +99,7 @@ if df is not None:
         st.success(f"🔥 **{target_champ}** 인기 조합 (판수)")
         for i in range(1, 4):
             st.write(f"{i}위: {champ_data[f'판수{i}위_조합']} ({champ_data[f'판수{i}위_판수']}판)")
+
 
 
 
