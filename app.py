@@ -46,15 +46,13 @@ if df is not None:
 
     # 데이터 테이블 출력
     st.subheader("🏆 전체 통계 및 조합 데이터")
-    display_columns = [
-        '챔피언', '전체승률', '픽률', '분석판수', 
-        '승률1위_조합', '승률1위_WR', '승률1위_판수',
-        '판수1위_조합', '판수1위_WR', '판수1위_판수'
-    ]
+
+    exclude_cols = ['승률_float', '픽률_per']
+    available_cols = [c for c in df.columns if c not in exclude_cols]
     # 컬럼 선택 기능
     selected_cols = st.multiselect(
         "표시할 컬럼 선택", 
-        display_columns, 
+        available_cols, 
         default=['챔피언', '전체승률', '픽률', '분석판수', '승률1위_조합', '판수1위_조합']
     )
     
@@ -115,6 +113,7 @@ if df is not None:
         st.success(f"🔥 **{target_champ}** 인기 조합 (판수)")
         for i in range(1, 4):
             st.write(f"{i}위: {champ_data[f'판수{i}위_조합']} ({champ_data[f'판수{i}위_판수']}판)")
+
 
 
 
