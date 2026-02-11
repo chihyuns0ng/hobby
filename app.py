@@ -14,9 +14,9 @@ def load_data():
         df = pd.read_csv('aram_top3_260206.csv')
         # 승률 str->float
         df['승률_float'] = df['전체승률'].str.replace('%', '').astype(float)
-        # 픽률 (ipynb 코드에서 가져온 값 이용)
+        # 픽률 (ipynb 코드에서 가져온 매치 수 값 이용)
         total_matches = 134925 
-        df['픽률'] = (df['분석판수'] / total_matches) * 100
+        df['픽률'] = (df['분석판수'] / total_matches) * 100 * 10
         
         return df
     except FileNotFoundError:
@@ -99,5 +99,6 @@ if df is not None:
         st.success(f"🔥 **{target_champ}** 인기 조합 (판수)")
         for i in range(1, 4):
             st.write(f"{i}위: {champ_data[f'판수{i}위_조합']} ({champ_data[f'판수{i}위_판수']}판)")
+
 
 
