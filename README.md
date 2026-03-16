@@ -1,5 +1,5 @@
 # ARAM_Analysis
-[page](https://aram-analysis.streamlit.app/)
+[Link](https://aram-analysis.streamlit.app/)
 # 수집 데이터<br/>
 임의의 솔로랭크 마스터 티어 이상 유저 5,000명의 ID 및 해당 ID의 최근 칼바람 나락 매치 100회분 (중복 제외) <br/>
 # 수집 일자<br/>
